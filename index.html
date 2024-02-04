@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Feliciona's 17th Birthday Party</title>
+    <style>
+      html {
+        overflow-x: hidden;
+      }
+      body {
+        width: 100%;
+        overflow: hidden;
+        font-family: "Playfair display", serif;
+        font-weight: 700;
+      }
+      .dear-box {
+        width: 85%;
+        padding-top: 40%;
+        background-image: url("img/cover/dear.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        transform: translateY(4vw);
+      }
+      .dear-box h3 {
+        transform: translateY(-13.5vw);
+      }
+      /* overlay */
+      #overlay {
+        position: fixed; /* Cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("img/cover/cover.webp") no-repeat center center fixed;
+        background-size: cover; /* Make sure the image covers the entire viewport */
+        background-attachment: scroll;
+        z-index: 1031;
+      }
+      #overlay-contents {
+        position: absolute;
+        bottom: 2%; /* Adjust according to your needs */
+        left: 50%;
+        transform: translateX(-50%); /* Centers the content horizontally */
+        text-align: center;
+      }
+      .glow {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #ff66b2; /* Pink color */
+        box-shadow: 0 0 2px #ff66b2, /* Inner shadow */ 0 0 4px #ff66b2,
+          /* Medium shadow */ 0 0 6px #ff3399,
+          /* Darker pink shadow */ 0 0 8px #ff3399,
+          /* Darker pink shadow */ 0 0 10px #ff3399,
+          /* Darker pink shadow */ 0 0 12px #ff3399,
+          /* Darker pink shadow */ 0 0 14px #ff3399; /* Darkest pink shadow */
+        animation: glowing 1.5s infinite alternate;
+      }
+
+      @keyframes glowing {
+        from {
+          box-shadow: 0 0 2px #ff66b2, 0 0 4px #ff66b2, 0 0 6px #ff3399,
+            0 0 8px #ff3399, 0 0 10px #ff3399, 0 0 12px #ff3399,
+            0 0 14px #ff3399;
+        }
+        to {
+          box-shadow: 0 0 6px #ff66b2, 0 0 8px #ff66b2, 0 0 10px #ff3399,
+            0 0 12px #ff3399, 0 0 14px #ff3399, 0 0 16px #ff3399,
+            0 0 18px #ff3399;
+        }
+      }
+      /* gif */
+      #gif {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("img/anim.gif") no-repeat center center fixed;
+        background-size: cover;
+        background-attachment: scroll;
+        z-index: 2;
+        mix-blend-mode: plus-lighter;
+        /*mix-blend-mode: multiply;*/
+        /* filter: brightness(170%) sepia(50%) opacity(80%); */
+      }
+      /* audio */
+      #audioControl {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 99;
+        cursor: pointer;
+        padding: 8px 12px 10px 12px;
+        background-color: rgb(255, 255, 255, 0.5);
+        color: #fff;
+        border-radius: 5px;
+      }
+      /* navbar */
+      .navbar-toggler {
+        border: none;
+      }
+      .navbar-nav a {
+        text-shadow: 2px 2px rgba(50, 50, 50, 0.5);
+      }
+      /* backgrounds */
+      .bg {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 100%;
+        padding-top: 185%;
+      }
+      section {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+      }
+      /* animation */
+      img.img-fluid {
+        transform: translateY(25px);
+        opacity: 0;
+        transition: transform 1s, opacity 1s;
+      }
+      .main-image {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+      }
+      .disappear {
+        visibility: hidden;
+      }
+      /* page1 */
+      #jumbo {
+        text-align: center;
+        bottom: 3%;
+        width: 80%;
+      }
+      .bg-1 {
+        background-image: url("img/slide_1/bg1.webp");
+      }
+      /* page2 */
+      #profile {
+        text-align: center;
+        top: 3%;
+        width: 90%;
+      }
+      .bg-2 {
+        background-image: url("img/slide_2/bg2.webp");
+      }
+      .inv-txt {
+        transform: translateX(45%) !important;
+      }
+      /* page3 */
+      .bg-3 {
+        background-image: url("img/slide_3/bg3.webp");
+      }
+      #thedate {
+        text-align: center;
+        top: 5%;
+        width: 89%;
+      }
+      /* countdown */
+      .timer {
+        width: 100%;
+        padding-top: 40%; /* This maintains the aspect ratio */
+        transform: translateX(4%) translateY(-10%);
+      }
+
+      .timer #day {
+        background-image: url("img/slide_3/timer_d.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      .timer #hrs {
+        background-image: url("img/slide_3/timer_h.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      .timer #min {
+        background-image: url("img/slide_3/timer_m.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      .timer .col-4 {
+        width: 21vw;
+        height: 39vw;
+        padding: 0;
+        transform: translateY(-85px);
+        font-size: x-large !important;
+        padding-top: 9.5vw;
+      }
+      /* page4 */
+      .bg-4 {
+        background-image: url("img/slide_4/bg4.webp");
+      }
+      #venue {
+        text-align: center;
+        top: 3%;
+        width: 86%;
+      }
+      .map {
+        width: 39vw;
+        transform: translateX(73%) !important;
+      }
+      .divider-1 {
+        padding-top: 53vw;
+      }
+      /* page5 */
+      .bg-5 {
+        background-image: url("img/slide_5/bg5.webp");
+      }
+      #attire {
+        text-align: center;
+        top: 3%;
+        width: 100%;
+      }
+      .dc-color {
+        width: 69vw;
+      }
+      .divider-2 {
+        padding-top: 90vw;
+      }
+      /* page6 */
+      .bg-6 {
+        background-image: url("img/slide_6/bg6.webp");
+      }
+      #gallery {
+        text-align: center;
+        top: 0;
+        width: 100%;
+      }
+      .big-img {
+        width: 41.7vw;
+        cursor: pointer;
+      }
+      .big-1 {
+        transform: rotate(-7.5deg) translateX(5vw) translateY(-2vw) !important;
+      }
+      .big-2 {
+        transform: rotate(18.5deg) translateX(-2vw) translateY(11vw) !important;
+      }
+      .divider-3 {
+        padding-top: 23vw;
+      }
+      .sm-img {
+        width: 21.4vw;
+        cursor: pointer;
+      }
+      .modal {
+        --bs-modal-bg: rgba(0, 0, 0, 0);
+      }
+      /* page7 */
+      .bg-7 {
+        padding-top: 233% !important;
+        background-image: url("img/slide_7/bg7.webp");
+      }
+      #rsvp {
+        top: 15%;
+      }
+      #thanks {
+        bottom: 0;
+        width: 90%;
+      }
+      /* form */
+      .wish-form {
+        color: #fff;
+        padding: 1rem 4rem;
+      }
+      .wish-form label,
+      .wish-form input,
+      .wish-form textarea,
+      .wish-form button {
+        font-size: 12px;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .wish-form input,
+      .wish-form textarea,
+      .wish-form button {
+        padding: 10px;
+        border: none;
+      }
+      .wish-form button {
+        background-color: rgba(228, 44, 212, 0.5);
+        color: #fff;
+        cursor: pointer;
+      }
+      /* wishlist */
+      .wish-list {
+        max-height: 40vw;
+        overflow-y: scroll;
+        color: white;
+        font-size: 12px;
+      }
+      .wish-item {
+        padding: 5px;
+        border-bottom: 2px solid white;
+      }
+
+      /* media query */
+      .ds-com {
+        display: none;
+      }
+      .mobile-com {
+        display: block;
+      }
+      @media (min-aspect-ratio: 1/1) {
+        .mobile-com {
+          display: none;
+        }
+        .ds-com {
+          display: block;
+        }
+        .dear-box {
+          width: 30%;
+          transform: translateY(14vw);
+        }
+        .dear-box h3 {
+          transform: translateY(-18vw);
+        }
+        /* overlay */
+        #overlay {
+          background: url("img/cover/cover_pc.webp") no-repeat center center
+            scroll;
+          position: fixed;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+          width: 100%;
+          padding-top: 10%;
+        }
+        #overlay-contents {
+          bottom: 7.5%;
+          left: 73%;
+        }
+        /* page1 */
+        .bg {
+          padding-top: 60%;
+        }
+        .bg-1 {
+          background-image: url("img/slide_1/bg1_pc.webp");
+        }
+        #jumbo {
+          width: 35%;
+          bottom: 0;
+        }
+        /* page2 */
+        .bg-2 {
+          background-image: url("img/slide_2/bg2_pc.webp");
+        }
+        #profile {
+          width: 37%;
+        }
+        .inv-txt {
+          transform: translateX(57%) !important;
+        }
+        /* page3 */
+        .bg-3 {
+          background-image: url("img/slide_3/bg3_pc.webp");
+        }
+        #thedate {
+          width: 37%;
+          top: 2%;
+        }
+        .timer .col-4 {
+          width: 6vw;
+          height: 11.2vw;
+          padding-top: 2.7vw;
+        }
+        /* page4 */
+        .bg-4 {
+          background-image: url("img/slide_4/bg4_pc.webp");
+        }
+        #venue {
+          width: 33%;
+          top: 2%;
+        }
+        .divider-1 {
+          padding-top: 16.7vw;
+        }
+        .map {
+          width: 17vw;
+          transform: translateX(75%) !important;
+        }
+        /* page5 */
+        .bg-5 {
+          background-image: url("img/slide_5/bg5_pc.webp");
+        }
+        #attire {
+          width: 33%;
+          top: 7%;
+        }
+        .divider-2 {
+          padding-top: 30vw;
+        }
+        /* page6 */
+        .bg-6 {
+          background-image: url("img/slide_6/bg6_pc.webp");
+        }
+        #gallery {
+          width: 40%;
+          top: 2%;
+        }
+        .big-img {
+          width: 15.89vw;
+        }
+        .big-1 {
+          transform: rotate(-7.5deg) translateX(2vw) translateY(-4vw) !important;
+        }
+        .big-2 {
+          transform: rotate(18.5deg) translateX(-3vw) !important;
+        }
+        .divider-3 {
+          padding-top: 3vw;
+        }
+        .sm-img {
+          width: 7.18vw;
+        }
+        /* page7 */
+        .bg-7 {
+          background-image: url("img/slide_7/bg7_pc.webp");
+          padding-top: 93.6% !important;
+        }
+        #rsvp {
+          width: 35%;
+          top: 21%;
+          left: 48%;
+        }
+        #thanks {
+          bottom: 0;
+          width: 30%;
+          left: 48%;
+        }
+        .wish-form label,
+        .wish-form input,
+        .wish-form textarea,
+        .wish-form button,
+        .wish-list {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="myAudio" autoplay loop>
+      <source src="bgsound.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <div id="audioControl" onclick="toggleAudio()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="1em"
+        viewBox="0 0 640 512"
+      >
+        <path
+          d="M533.6 32.5c-10.3-8.4-25.4-6.8-33.8 3.5s-6.8 25.4 3.5 33.8C557.5 113.8 592 180.8 592 256s-34.5 142.2-88.7 186.3c-10.3 8.4-11.8 23.5-3.5 33.8s23.5 11.8 33.8 3.5C598.5 426.8 640 346.2 640 256s-41.5-170.8-106.4-223.5zM473.1 107c-10.3-8.4-25.4-6.8-33.8 3.5s-6.8 25.4 3.5 33.8C475.3 170.7 496 210.9 496 256s-20.7 85.3-53.2 111.8c-10.3 8.4-11.8 23.5-3.5 33.8s23.5 11.8 33.8 3.5c43.2-35.2 70.9-88.9 70.9-149s-27.7-113.8-70.9-149zm-60.5 74.5c-10.3-8.4-25.4-6.8-33.8 3.5s-6.8 25.4 3.5 33.8C393.1 227.6 400 241 400 256s-6.9 28.4-17.7 37.3c-10.3 8.4-11.8 23.5-3.5 33.8s23.5 11.8 33.8 3.5C434.1 312.9 448 286.1 448 256s-13.9-56.9-35.4-74.5zM159.9 201.9L272 102.3V409.7L159.9 310.1c-4.4-3.9-10.1-6.1-15.9-6.1H56c-4.4 0-8-3.6-8-8V216c0-4.4 3.6-8 8-8h88c5.9 0 11.6-2.2 15.9-6.1zM290.2 32c-7.3 0-14.3 2.7-19.8 7.5L134.9 160H56c-30.9 0-56 25.1-56 56v80c0 30.9 25.1 56 56 56h78.9L270.4 472.5c5.5 4.8 12.5 7.5 19.8 7.5c16.5 0 29.8-13.3 29.8-29.8V61.8C320 45.3 306.7 32 290.2 32z"
+        />
+      </svg>
+    </div>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top px-3">
+      <a class="navbar-brand" href="#">
+        <img
+          src="img/slide_2/inv_title.webp"
+          alt="Nicole Logo"
+          width="100"
+          height="45"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul
+          class="navbar-nav ms-auto navbar-nav-scroll"
+          style="--bs-scroll-height: 120px"
+        >
+          <li class="nav-item px-4">
+            <a class="nav-link text-light" href="#profilebg">Profile</a>
+          </li>
+          <li class="nav-item px-4">
+            <a class="nav-link text-light" href="#thedate">The Day</a>
+          </li>
+          <li class="nav-item px-4">
+            <a class="nav-link text-light" href="#venue">Venue</a>
+          </li>
+          <li class="nav-item px-4">
+            <a class="nav-link text-light" href="#attire">Dresscode</a>
+          </li>
+          <li class="nav-item px-4">
+            <a class="nav-link text-light" href="#gallery">Gallery</a>
+          </li>
+          <li class="nav-item px-4">
+            <a class="nav-link text-light" href="#rsvp">Wishes</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="bg bg-1">
+      <section id="jumbo">
+        <!-- <div class="py-5"></div>
+            <div class="py-4"></div> -->
+        <img
+          src="img/slide_1/welcome.webp"
+          alt="lets party"
+          class="img-fluid main-image welcome mobile-com"
+        />
+        <img
+          src="img/slide_1/welcome_pc.webp"
+          alt="lets party"
+          class="img-fluid main-image welcome ds-com"
+        />
+      </section>
+    </div>
+    <div class="bg bg-2" id="profilebg">
+      <section id="profile">
+        <img
+          src="img/slide_2/inv_title.webp"
+          alt="invitation title"
+          class="img-fluid"
+        />
+        <img
+          src="img/slide_2/inv.webp"
+          alt="invitation"
+          class="img-fluid inv-txt w-50"
+        />
+      </section>
+    </div>
+    <div class="bg bg-3">
+      <section id="thedate">
+        <img src="img/slide_3/date_1.webp" alt="date title" class="img-fluid" />
+        <div class="py-3"></div>
+        <img
+          src="img/slide_3/date_2.webp"
+          alt="date"
+          class="img-fluid px-3 mobile-com"
+          style="margin-top: -20px"
+        />
+        <img
+          src="img/slide_3/date_2_pc.webp"
+          alt="date"
+          class="img-fluid px-3 ds-com"
+          style="margin-top: -20px"
+        />
+        <div class="row timer d-flex justify-content-center">
+          <div class="col-4 me-2" id="day">00</div>
+          <div class="col-4 mx-3" id="hrs">00</div>
+          <div class="col-4 ms-2" id="min">00</div>
+        </div>
+      </section>
+    </div>
+    <div class="bg bg-4">
+      <section id="venue">
+        <img
+          src="img/slide_4/venue_1.webp"
+          alt="venue title"
+          class="img-fluid"
+        />
+        <!-- <img src="ds/venue_ds.webp" alt="invitation" class="img-fluid ds-com"> -->
+        <div class="divider-1"></div>
+        <div class="text-center">
+          <a href="https://maps.app.goo.gl/y62ewWUJwgnxKA497"
+            ><img
+              src="img/slide_4/venue_2.webp"
+              alt="venue map"
+              class="img-fluid map"
+          /></a>
+        </div>
+        <div class="py-3 mobile-com"></div>
+        <div class="py-1 mobile-com"></div>
+        <img
+          src="img/slide_4/venue_3.webp"
+          alt="venue place"
+          class="img-fluid"
+        />
+      </section>
+    </div>
+    <div class="bg bg-5">
+      <section id="attire">
+        <img
+          src="img/slide_5/att_1.webp"
+          alt="attire title"
+          class="img-fluid px-5"
+        />
+        <div class="divider-2"></div>
+        <div class="px-md-5">
+          <img
+            src="img/slide_5/att_2.webp"
+            alt="attire color"
+            class="img-fluid px-4 px-md-5 dc-color"
+          />
+        </div>
+      </section>
+    </div>
+    <div class="bg bg-6">
+      <section id="gallery">
+        <img
+          src="img/slide_6/gallery_1.webp"
+          alt="gallery title"
+          class="img-fluid px-5"
+        />
+        <div class="py-4"></div>
+        <img
+          src="img/slide_6/pic_1.webp"
+          alt="gallery img 1"
+          class="img-fluid big-img big-1 shadow"
+          data-bs-toggle="modal"
+          data-bs-target="#img1"
+        />
+        <img
+          src="img/slide_6/pic_2.webp"
+          alt="gallery img 2"
+          class="img-fluid big-img big-2 shadow"
+          data-bs-toggle="modal"
+          data-bs-target="#img2"
+        />
+        <div class="divider-3"></div>
+        <img
+          src="img/slide_6/pic_3.webp"
+          alt="gallery img 3"
+          class="img-fluid sm-img"
+          data-bs-toggle="modal"
+          data-bs-target="#img3"
+        />
+        <img
+          src="img/slide_6/pic_4.webp"
+          alt="gallery img 4"
+          class="img-fluid sm-img mx-3"
+          data-bs-toggle="modal"
+          data-bs-target="#img4"
+        />
+        <img
+          src="img/slide_6/pic_5.webp"
+          alt="gallery img 5"
+          class="img-fluid sm-img"
+          data-bs-toggle="modal"
+          data-bs-target="#img5"
+        />
+        <div class="px-md-5">
+          <img
+            src="img/slide_6/gallery_2.webp"
+            alt="rules"
+            class="img-fluid px-5 pt-3 pt-md-0"
+          />
+        </div>
+      </section>
+    </div>
+    <div class="bg bg-7">
+      <section id="rsvp">
+        <div class="px-4">
+          <div class="px-2">
+            <img
+              src="img/slide_7/wish_1.webp"
+              alt="invitation"
+              class="img-fluid px-5"
+            />
+          </div>
+          <form
+            action="{{ route('guests.wish') }}"
+            method="post"
+            class="wish-form"
+          >
+            <!-- @csrf           -->
+            <label for="sender" class="text-start">Nama:</label>
+            <input
+              type="text"
+              name="sender"
+              id="sender"
+              class="shdow"
+              required
+            />
+
+            <label for="wish" class="text-start">Wish:</label>
+            <textarea
+              name="wish"
+              id="wish"
+              rows="2"
+              class="shadow"
+              required
+            ></textarea>
+
+            <button type="submit" class="shadow">Submit</button>
+          </form>
+          <div class="px-4">
+            <div class="wish-list px-4">
+              <!-- @foreach($wishes as $wish) -->
+              <div class="wish-item">
+                Vincent<br />
+                Hbd to you
+              </div>
+              <div class="wish-item">
+                Tabita<br />
+                happy birthday bestiee
+              </div>
+              <div class="wish-item">
+                Zefanya<br />
+                hbd yaa
+              </div>
+              <!-- @endforeach -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="thanks">
+        <div class="px-2 mt-4">
+          <img
+            src="img/slide_7/wish_2.webp"
+            alt="invitation"
+            class="img-fluid px-4 thanks"
+          />
+        </div>
+      </section>
+    </div>
+    <div
+      class="modal fade"
+      id="img1"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <img
+            src="img/slide_6/pic_1.webp"
+            alt="gallery img 1"
+            class="shadow"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="img2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <img
+            src="img/slide_6/pic_2.webp"
+            alt="gallery img 1"
+            class="shadow"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="img3"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <img src="img/slide_6/pic_3.webp" alt="gallery img 1" />
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="img4"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <img src="img/slide_6/pic_4.webp" alt="gallery img 1" />
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="img5"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <img src="img/slide_6/pic_5.webp" alt="gallery img 1" />
+        </div>
+      </div>
+    </div>
+    <div id="gif"></div>
+    <div id="overlay" onclick="hideOverlay()">
+      <section
+        id="overlay-contents"
+        class="d-flex flex-column justify-content-center align-items-center"
+      >
+        <div class="py-5"></div>
+        <div class="py-3 ds-com"></div>
+        <div class="dear-box">
+          <h3>Zefanya</h3>
+        </div>
+        <button
+          class="btn rounded-pill text-white glow"
+          style="background-color: rgba(228, 44, 212, 0.9)"
+        >
+          Valid for 1 person
+        </button>
+
+        <p class="text-light mb-0 mt-3">Click anywhere to continue...</p>
+      </section>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $(window).scroll(function () {
+        // Navbar background color change
+        if ($(window).scrollTop() > 50) {
+          $(".navbar").css("background-color", "rgba(55, 55, 55, 0.4)");
+        } else {
+          $(".navbar").css("background-color", "transparent");
+        }
+
+        // Image Fade-In Animation based on scroll
+        $("img.img-fluid").each(function () {
+          let top_of_element = $(this).offset().top;
+          let bottom_of_element = top_of_element + $(this).outerHeight();
+          let bottom_of_screen =
+            $(window).scrollTop() + $(window).innerHeight();
+          let top_of_screen = $(window).scrollTop();
+
+          if (
+            bottom_of_screen > top_of_element &&
+            top_of_screen < bottom_of_element
+          ) {
+            if (!$(this).hasClass("animated")) {
+              $(this)
+                .css({
+                  transform: "translateY(0)",
+                  opacity: "1",
+                })
+                .addClass("animated");
+            }
+          } else {
+            $(this).removeClass("animated").css({
+              transform: "translateY(25px)",
+              opacity: "0",
+            });
+          }
+        });
+      });
+
+      // Countdown Timer Functionality
+
+      // Audio control functionality
+      let audioElement = document.getElementById("myAudio");
+      let audioControl = document.getElementById("audioControl");
+
+      function hideOverlay() {
+        document.getElementById("overlay").classList.add("d-none");
+        audioElement.play();
+      }
+
+      function toggleAudio() {
+        if (audioElement.paused) {
+          audioElement.play();
+          // You can replace the SVG content here with the play icon
+          audioControl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M533.6 32.5c-10.3-8.4-25.4-6.8-33.8 3.5s-6.8 25.4 3.5 33.8C557.5 113.8 592 180.8 592 256s-34.5 142.2-88.7 186.3c-10.3 8.4-11.8 23.5-3.5 33.8s23.5 11.8 33.8 3.5C598.5 426.8 640 346.2 640 256s-41.5-170.8-106.4-223.5zM473.1 107c-10.3-8.4-25.4-6.8-33.8 3.5s-6.8 25.4 3.5 33.8C475.3 170.7 496 210.9 496 256s-20.7 85.3-53.2 111.8c-10.3 8.4-11.8 23.5-3.5 33.8s23.5 11.8 33.8 3.5c43.2-35.2 70.9-88.9 70.9-149s-27.7-113.8-70.9-149zm-60.5 74.5c-10.3-8.4-25.4-6.8-33.8 3.5s-6.8 25.4 3.5 33.8C393.1 227.6 400 241 400 256s-6.9 28.4-17.7 37.3c-10.3 8.4-11.8 23.5-3.5 33.8s23.5 11.8 33.8 3.5C434.1 312.9 448 286.1 448 256s-13.9-56.9-35.4-74.5zM159.9 201.9L272 102.3V409.7L159.9 310.1c-4.4-3.9-10.1-6.1-15.9-6.1H56c-4.4 0-8-3.6-8-8V216c0-4.4 3.6-8 8-8h88c5.9 0 11.6-2.2 15.9-6.1zM290.2 32c-7.3 0-14.3 2.7-19.8 7.5L134.9 160H56c-30.9 0-56 25.1-56 56v80c0 30.9 25.1 56 56 56h78.9L270.4 472.5c5.5 4.8 12.5 7.5 19.8 7.5c16.5 0 29.8-13.3 29.8-29.8V61.8C320 45.3 306.7 32 290.2 32z"/></svg>`;
+        } else {
+          audioElement.pause();
+          // You can replace the SVG content here with the pause icon
+          audioControl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3zM425 167l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg>`;
+        }
+      }
+    </script>
+  </body>
+</html>
